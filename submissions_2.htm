@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+				<title>提交记录 - Sharp Sword 剑锋 OI</title>
+		
+		<script type="text/javascript">uojHome = 'http://swordoj.win'</script>
+
+		<!-- Bootstrap core CSS -->
+		<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />		<!-- Bootstrap theme -->
+		<link type="text/css" rel="stylesheet" href="css/bootstrap-theme.min.css" />
+		<!-- Custom styles for this template -->
+		<link type="text/css" rel="stylesheet" href="css/uoj-theme.css" />		
+		<!-- jQuery (necessary for Bootstrap\'s JavaScript plugins) -->
+		<script src="js/jquery.min.js"></script>		
+		<!-- jQuery autosize -->
+		<script src="js/jquery.autosize.min.js"></script>		<script type="text/javascript">
+			$(document).ready(function() {
+				$('textarea').autosize();
+			});
+		</script>
+		
+		<!-- jQuery cookie -->
+		<script src="js/jquery.cookie.min.js"></script>		
+		<!-- jQuery modal -->
+		<script src="js/jquery.modal.js"></script>		
+		<!-- jQuery tag canvas -->
+				
+		<!-- Include all compiled plugins (below), or include individual files as needed -->
+		<script src="js/bootstrap.min.js"></script>		
+		<!-- Color converter -->
+		<script src="js/color-converter.min.js"></script>		
+		<!-- uoj -->
+		<script src="js/uoj.js"></script>		
+		<!-- LAB -->
+		<script src="js/LAB.min.js"></script>
+		<!-- UOJ ico -->
+		<link rel="shortcut icon" href="pictures/UOJ.ico" />
+		
+				
+				
+				
+				
+				
+				
+				
+		
+				
+				
+				
+				
+				
+		
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+			<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+		
+		<script type="text/javascript">
+		before_window_unload_message = null;
+		$(window).on('beforeunload', function() {
+			if (before_window_unload_message !== null) {
+			    return before_window_unload_message;
+			}
+		});
+		</script>
+		
+			</head>
+	<body role="document">
+		<div class="container theme-showcase" role="main">
+						<div>
+				<ul class="nav nav-pills pull-right" role="tablist">
+									<li role="presentation"><a href="login.htm">登录</a></li>
+					<li role="presentation"><a href="register.htm">注册</a></li>
+								</ul>
+				<h1 class="hidden-xs"><a href="swordoj_default.html"><img src="pictures/UOJ_small.png" alt="UOJ Logo" class="img-rounded" style="width:39px; height:39px;" /></a> Sharp Sword 剑锋 OI</h1>
+				<h1 class="visible-xs">SSOI</h1>
+			</div>
+			
+			<div class="navbar navbar-default" role="navigation">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="swordoj_default.html">SSOI</a>
+		</div>
+		<div class="navbar-collapse collapse">
+			<ul class="nav navbar-nav">
+				<li><a href="contests.htm">比赛</a></li>
+				<li><a href="problems.htm">题库</a></li>
+				<li><a href="submissions.htm">提交记录</a></li>
+				<li><a href="hacks.htm">Hack!</a></li>
+				<li><a href="blogs.htm">博客</a></li>
+				<li><a href="faq.htm">帮助</a></li>
+			</ul>
+		</div><!--/.nav-collapse -->
+	</div>
+</div>
+						
+			<div class="uoj-content">
+<div class="hidden-xs">
+		<form id="form-search" class="form-inline" method="get">
+		<div id="form-group-problem_id" class="form-group">
+			<label for="input-problem_id" class="control-label">题目ID:</label>
+			<input type="text" class="form-control input-sm" name="problem_id" id="input-problem_id" value="" maxlength="4" style="width:4em" />
+		</div>
+		<div id="form-group-submitter" class="form-group">
+			<label for="input-submitter" class="control-label">用户名:</label>
+			<input type="text" class="form-control input-sm" name="submitter" id="input-submitter" value="" maxlength="20" style="width:10em" />
+		</div>
+		<div id="form-group-score" class="form-group">
+			<label for="input-min_score" class="control-label">分数范围:</label>
+			<input type="text" class="form-control input-sm" name="min_score" id="input-min_score" value="" maxlength="3" style="width:4em" placeholder="0" />
+			<label for="input-max_score" class="control-label">~</label>
+			<input type="text" class="form-control input-sm" name="max_score" id="input-max_score" value="" maxlength="3" style="width:4em" placeholder="100" />
+		</div>
+		<div id="form-group-language" class="form-group">
+			<label for="input-language" class="control-label">语言:</label>
+			<input type="text" class="form-control input-sm" name="language" id="input-language" value="" maxlength="10" style="width:8em" />
+		</div>
+		<button type="submit" id="submit-search" class="btn btn-default btn-sm">搜索</button>
+	</form>
+	<script type="text/javascript">
+		$('#form-search').submit(function(e) {
+			e.preventDefault();
+			
+			url = '/submissions';
+			qs = [];
+			$(['problem_id', 'submitter', 'min_score', 'max_score', 'language']).each(function () {
+				if ($('#input-' + this).val()) {
+					qs.push(this + '=' + encodeURIComponent($('#input-' + this).val()));
+				}
+			});
+			if (qs.length > 0) {
+				url += '?' + qs.join('&');
+			}
+			location.href = url;
+		});
+	</script>
+	<div class="top-buffer-sm"></div>
+</div>
+<div class="table-responsive"><table class="table table-bordered table-hover table-striped table-text-center"><thead><tr><th>ID</th><th>题目</th><th>提交者</th><th>结果</th><th>用时</th><th>内存</th><th>语言</th><th>文件大小</th><th>提交时间</th></tr></thead><tbody><tr><td><a href="http://swordoj.win/submission/16313">#16313</a></td><td><a href="problem/1115.htm">#1115. 整数分解【“剑锋OI”普及组多校联盟系列赛（22）】</a></td><td><span class="uoj-username" data-rating="1607">XH_yangzehao</span></td><td><a href="http://swordoj.win/submission/16313" class="uoj-score">0</a></td><td>0ms</td><td>0kb</td><td><a href="http://swordoj.win/submission/16313">C++</a></td><td>460b</td><td><small>2018-05-05 14:02:29</small></td></tr><tr><td><a href="http://swordoj.win/submission/16312">#16312</a></td><td><a href="http://swordoj.win/problem/260">#260. 基因相关性</a></td><td><span class="uoj-username" data-rating="1500">CZY</span></td><td><a href="http://swordoj.win/submission/16312" class="uoj-score">100</a></td><td>0ms</td><td>2620kb</td><td><a href="http://swordoj.win/submission/16312">C++</a></td><td>352b</td><td><small>2018-05-05 11:39:50</small></td></tr><tr><td><a href="http://swordoj.win/submission/16311">#16311</a></td><td><a href="http://swordoj.win/problem/1129">#1129. 组合锁【“剑锋OI”普及组多校联盟系列赛（23）】</a></td><td><span class="uoj-username" data-rating="1490">DX_JiaJiayi</span></td><td><a href="http://swordoj.win/submission/16311" class="uoj-score">100</a></td><td>0ms</td><td>2620kb</td><td><a href="http://swordoj.win/submission/16311">C++</a></td><td>473b</td><td><small>2018-05-04 18:34:13</small></td></tr><tr><td><a href="http://swordoj.win/submission/16310">#16310</a></td><td><a href="problem/1127.htm">#1127. 排序</a></td><td><span class="uoj-username" data-rating="1973">Yu</span></td><td><a href="http://swordoj.win/submission/16310" class="uoj-score">100</a></td><td>924ms</td><td>2156kb</td><td><a href="http://swordoj.win/submission/16310">C++</a></td><td>1.8kb</td><td><small>2018-05-03 22:41:37</small></td></tr><tr><td><a href="http://swordoj.win/submission/16309">#16309</a></td><td><a href="problem/1127.htm">#1127. 排序</a></td><td><span class="uoj-username" data-rating="1973">Yu</span></td><td><a href="http://swordoj.win/submission/16309" class="uoj-score">0</a></td><td>824ms</td><td>2144kb</td><td><a href="http://swordoj.win/submission/16309">C++</a></td><td>1.8kb</td><td><small>2018-05-03 22:34:53</small></td></tr><tr><td><a href="http://swordoj.win/submission/16308">#16308</a></td><td><a href="problem/1127.htm">#1127. 排序</a></td><td><span class="uoj-username" data-rating="1973">Yu</span></td><td><a href="http://swordoj.win/submission/16308" class="uoj-score">0</a></td><td>816ms</td><td>2100kb</td><td><a href="http://swordoj.win/submission/16308">C++</a></td><td>1.8kb</td><td><small>2018-05-03 22:25:14</small></td></tr><tr><td><a href="http://swordoj.win/submission/16307">#16307</a></td><td><a href="http://swordoj.win/problem/1136">#1136. The Battle of Chibi</a></td><td><span class="uoj-username" data-rating="2169">CH_zhangjiaqi</span></td><td><a href="http://swordoj.win/submission/16307" class="uoj-score">100</a></td><td>4ms</td><td>11340kb</td><td><a href="http://swordoj.win/submission/16307">C++</a></td><td>1.3kb</td><td><small>2018-05-02 20:02:50</small></td></tr><tr><td><a href="http://swordoj.win/submission/16306">#16306</a></td><td><a href="http://swordoj.win/problem/1136">#1136. The Battle of Chibi</a></td><td><span class="uoj-username" data-rating="2169">CH_zhangjiaqi</span></td><td><a href="http://swordoj.win/submission/16306" class="uoj-score">100</a></td><td>4ms</td><td>11296kb</td><td><a href="http://swordoj.win/submission/16306">C++</a></td><td>1.3kb</td><td><small>2018-05-02 20:01:13</small></td></tr><tr><td><a href="http://swordoj.win/submission/16305">#16305</a></td><td><a href="http://swordoj.win/problem/1136">#1136. The Battle of Chibi</a></td><td><span class="uoj-username" data-rating="2169">CH_zhangjiaqi</span></td><td><a href="http://swordoj.win/submission/16305" class="uoj-score">100</a></td><td>24ms</td><td>21668kb</td><td><a href="http://swordoj.win/submission/16305">C++</a></td><td>1.4kb</td><td><small>2018-05-02 19:55:23</small></td></tr><tr><td><a href="http://swordoj.win/submission/16304">#16304</a></td><td><a href="http://swordoj.win/problem/1136">#1136. The Battle of Chibi</a></td><td><span class="uoj-username" data-rating="2169">CH_zhangjiaqi</span></td><td><a href="http://swordoj.win/submission/16304" class="uoj-score">30</a></td><td>4ms</td><td>12200kb</td><td><a href="http://swordoj.win/submission/16304">C++</a></td><td>961b</td><td><small>2018-05-02 19:53:38</small></td></tr></tbody></table></div><div class="text-center"><ul class="pagination top-buffer-no bot-buffer-sm"><li><a href="submissions.htm"><span class="glyphicon glyphicon glyphicon-backward"></span></a></li><li><a href="submissions.htm">1</a></li><li class="active"><a href="submissions_2.htm">2</a></li><li><a href="submissions_3.htm">3</a></li><li><a href="submissions_4.htm">4</a></li><li><a href="submissions_5.htm">5</a></li><li><a href="submissions_6.htm">6</a></li><li><a href="http://swordoj.win/submissions?page=7">7</a></li><li><a href="submissions_3.htm"><span class="glyphicon glyphicon glyphicon-forward"></span></a></li></ul></div>			</div>
+						<div class="uoj-footer">
+				<p>
+					<a href="http://swordoj.win/submissions?page=2&amp;locale=zh-cn"><img src="http://img.uoj.ac/utility/flags/24/cn.png" alt="中文" /></a> 
+					<a href="http://swordoj.win/submissions?page=2&amp;locale=en"><img src="http://img.uoj.ac/utility/flags/24/gb.png" alt="English" /></a>
+				</p>
+				
+				<ul class="list-inline">
+					<li>Sharp Sword 剑锋 OI</li>
+									</ul>
+				
+				<p>Server time: 2018-05-07 15:46:05 | <a href="http://github.com/UniversalOJ/UOJ-System">开源项目</a></p>
+			</div>
+					</div>
+		<!-- /container -->
+	</body>
+</html>
