@@ -6,9 +6,220 @@
 	<body>
 		<h1 font="black">Pictures Gallery</h1></br>
 		<a>last update 180711</a></br>
-		<img src="http://cdh233.github.io/images/test.png"></img>
-			  <img src=""></img>
+		<img src="http://cdh233.github.io/images/test.png" alt="pid=N/A"></img>
+			  <img src="http://cdh"></img>
 		
 			  
 	</body>
 </html>
+<!--javascript filter
+	<script type="text/javascript">
+var filter_data;
+function DoGet(name, filelst, sender) {
+
+    var Promise = window.Promise;
+    if (!Promise) {
+        Promise = JSZip.external.Promise;
+    }
+	
+    /**
+     * Fetch the content and return the associated promise.
+     * @param {String} url the url of the content to fetch.
+     * @return {Promise} the promise containing the data.
+     */
+    function urlToPromise(url) {
+        return new Promise(function(resolve, reject) {
+            JSZipUtils.getBinaryContent(url, function (err, data) {
+                if(err) {
+                    reject(err);
+                } else {
+                    resolve(data);
+                }
+            });
+        });
+    }
+	
+	var zip = new JSZip();
+	for(var i = 0; i < filelst.length; ++i) {
+		var filename = filelst[i];
+		var url = filename;
+		filename = filename.replace(/.*\//g, "");
+		zip.file(filename, urlToPromise(url), {binary:true});
+	}
+
+	sender.disabled = true;
+	// when everything has been downloaded, we can trigger the dl
+	if (JSZip.support.blob) {
+		zip.generateAsync({type:"blob", mimeType: "application/octet-stream"}, function(metadata){
+			var text = metadata.percent.toFixed(2) + "%";
+			sender.removeChild(sender.firstChild);
+			sender.appendChild(document.createTextNode(text));
+		}).then(function (blob) {
+			// see FileSaver.js
+			sender.removeChild(sender.firstChild);
+			sender.appendChild(document.createTextNode("SAVE"));
+			sender.disabled = false;
+			sender.onclick = function() {
+				saveAs(blob, name + ".zip");
+			};
+			sender.onclick();
+		}, function (e) {
+			sender.disabled = false;
+			alert(e);
+		});
+	} else {
+		zip.generateAsync({type:"base64", mimeType: "application/octet-stream"}).then(function (base64) {
+			location.href="data:application/zip;base64," + base64;
+			sender.disabled = false;
+		}, function (e) {
+			sender.disabled = false;
+			alert(e);
+		});
+	}
+
+	return false;
+}
+
+function DoShowFileList(name, filelst) {
+	var floatPanel = document.getElementById("floatPanel");
+	floatPanel.style.display = "block";
+	var floatPanelTitle = document.getElementById("floatPanelTitle");
+	while (floatPanelTitle.firstChild) {
+		floatPanelTitle.removeChild(floatPanelTitle.firstChild);
+	}
+	floatPanelTitle.appendChild(document.createTextNode(name));
+	var floatPanelTable = document.getElementById("floatPanelTable");
+	while (floatPanelTable.firstChild) {
+		floatPanelTable.removeChild(floatPanelTable.firstChild);
+	}
+	for(var i = 0; i < filelst.length; ++i) {
+		var url = filelst[i];
+		var a = document.createElement('a');
+		a.href = url;
+		a.appendChild(document.createTextNode(url));
+		var h = document.createElement('h3');
+		h.appendChild(a);
+		var td = document.createElement('td');
+		td.appendChild(h);
+		var tr = document.createElement('tr');
+		tr.appendChild(td);
+		floatPanelTable.appendChild(tr);
+	}
+}
+
+function MakeTable(data) {
+	var title_count = document.getElementById("title_count");
+	title_count.removeChild(title_count.firstChild);
+	title_count.appendChild(document.createTextNode("" + data.length + "/" + all_data.length + " Titles"));
+	var table = document.getElementById("table_all");
+	
+	// keep title only
+    rows = table.getElementsByTagName("tr");
+	var count = table.rows.length;
+	while(--count > 1) table.deleteRow(count); 
+	
+	var date = new Date();
+	for(var i = 0; i < data.length; ++i) {
+		var line = data[i];
+		var filelst = line[4];
+		var id = line[2];
+		var tr = document.createElement('tr');
+		
+		// GET
+		var td = document.createElement('td');
+		var form = document.createElement('form');
+		var btn = document.createElement('button');
+		btn.className = "btn btn-primary";
+		var text;
+		if(filelst.length == 0) {
+			text = "VIEW";
+		} else {
+			text = 'GET'
+		}
+		btn.appendChild(document.createTextNode(text));
+		btn.onclick = function(arg1, arg2, sender){
+			return function(){DoGet(arg1, arg2, sender); };
+		}(id, filelst, btn);
+		btn.type = "button";
+		form.appendChild(btn);
+		td.appendChild(form);
+		tr.appendChild(td);
+		
+		// time
+		date.setTime(line[0] * 1000);
+		td = document.createElement('td');
+		td.className = "datetime";
+		td.appendChild(document.createTextNode(date.toLocaleString()));
+		tr.appendChild(td);
+
+		// brand
+		td = document.createElement('td');
+		td.className = "datetime";
+		td.appendChild(document.createTextNode(line[1]));
+		tr.appendChild(td);
+		
+		// name
+		td = document.createElement('td');
+		var a = document.createElement('a');
+		a.href = "#";
+		a.onclick = function(arg1, arg2) {
+			return function(){DoShowFileList(arg1, arg2);};
+		}(line[3], filelst);
+		a.appendChild(document.createTextNode(line[3]))
+		td.appendChild(a);
+		tr.appendChild(td);
+
+		table.appendChild(tr);
+	}
+};
+var _timerID = 0;
+function doFilterName(pattern) {
+	if (pattern.length) {
+		pattern = pattern.toLowerCase();
+		filter_data = [];
+		for(var i = 0; i < all_data.length; ++i) {
+			var text = all_data[i];
+			if (text[3].toLowerCase().indexOf(pattern) != -1 || text[1].toLowerCase().indexOf(pattern) != -1) {
+				filter_data.push(text);
+			}
+		}
+	} else {
+		filter_data = all_data;
+	}
+	MakeTable(filter_data);
+}
+doFilterName("");
+function onFilterInput(pattern) {
+	if (_timerID) {
+		window.clearTimeout(_timerID);
+	}
+	_timerID = window.setTimeout(function(){
+		doFilterName(pattern);
+	}, 330);
+}
+
+function sortTableByTime(newer) {
+	if (newer) filter_data.sort(function(a,b){
+		if (a[0] > b[0]) return 1;
+		if (a[0] < b[0]) return -1;
+		return 0;
+	});
+	else filter_data.sort(function(a,b){
+		if (a[0] > b[0]) return -1;
+		if (a[0] < b[0]) return 1;
+		return 0;
+	});
+	MakeTable(filter_data);
+}
+
+function sortTableByName(reverse) {
+	if (reverse) filter_data.sort(function(a,b){
+		return a[2].localeCompare(b[2]);
+	});
+	else filter_data.sort(function(a,b){
+		return b[2].localeCompare(a[2]);
+	})
+	MakeTable(filter_data);
+}
+</script>
+-->
