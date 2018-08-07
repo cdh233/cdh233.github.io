@@ -1,0 +1,24 @@
+body 
+			{
+				background-image: url("https://cdh233.github.io/images/0.png");
+				background-repeat:no-repeat;
+				background-attachment:fixed;
+				background-position:center;
+				
+			}
+			a {text-decoration: none;}
+			a:link {color: #11EEBB;}
+			a:visited {color: #FF33BB;}
+			a:hover {color: #BB00FF;}
+			a:active {color: #66CCFF;}
+			h3,h4,h1,p,pre
+			{
+				text-align:center;
+			}
+			table 
+			{
+				border-collapse:collapse;
+				border:1px #66CCFF;
+				width:1000px;
+				text-align:center;
+			}
