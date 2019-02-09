@@ -17,7 +17,7 @@
 
 *斜*
 
-<p style="color:rgb(255,100,0)"2333333</p>
+<p style="color:rgb(255,100,0)">2333333</p>
 
 <p style="text-align:center">2333333</p>
 
